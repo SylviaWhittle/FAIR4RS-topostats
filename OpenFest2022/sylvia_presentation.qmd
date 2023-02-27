@@ -1,0 +1,357 @@
+---
+title: "TopoStats : A FAIR success"
+format: 
+    revealjs: 
+        smaller: true
+        slide-number: true
+        theme: dark
+        scrollable: true
+        embed-resources: true
+---
+
+## What is TopoStats? 
+
+
+:::: {.columns}
+
+::: {.column width="33%"}
+![](before.png){}
+:::
+::: {.column width="33%"}
+![](after_no_border.png){}
+:::
+::: {.column width="33%"}
+![](after_with_mask_no_border.png){}
+:::
+
+::::
+
+TopoStats is a python toolkit for the automated processing and analysis of Atomic Force Microscopy (AFM) data. It takes noisy, non flat images that come from the atomic force microscope, flattens them, removes the background noise and detects structures in the data such as the DNA minicircles in the example above.
+
+
+
+
+## March 2022 
+
+:::: {.columns}
+
+::: {.column width="50%"}
+* Very hard to install.
+* Gwyddion, PyGwy dependencies. 
+* Contributing to TopoStats was a mess.
+* All values and configuration were hard-coded.
+* No versioning, no releases.
+* No official review process.
+* No tests. 
+* Some confusing file types like .gwy that mean nothing when viewed by the user.
+
+
+ 
+
+:::
+::: {.column width="50%"}
+
+
+
+
+:::
+
+This meant that working on TopoStats was confusing, difficult and prone to errors and lost data / scripts.
+
+::::
+
+
+## Gwyddion and PyGwy
+
+:::: {.columns}
+
+::: {.column width="50%"}
+* Gwyddion AFM analysis software
+    + Written in C++ 
+    + Almost no code comments
+    + Slow to use (GUI only)
+    + No automation
+    + No standardisation
+    + Lacking in documentation 
+    + Near impossible to contribute to / edit 
+:::
+::: {.column width="50%"}
+* PyGwy is a Python binding to Gwyddion's methods and functions.
+    + It uses Python 2.7 and confirmed not going to be updated to 3.X.
+    + Lacking documentation
+    + No support
+    + Difficult to contribute to
+:::
+
+::::
+
+
+## March 2022: Installation procedure 
+
+:::{.incremental}
+
+* Uninstall all python, gwydidon, pygobject, pycairo, pygtk installations
+* Delete all caches of the above softwares
+* Install Anaconda 32 bit
+* Install python 2.7
+* Install pycharm (register for an account if necessary)
+* Install Gwyddion (From an unfamiliar website)
+* Download a set of additional files from Google drive, hosted by our lab
+* **Set up the environment** 
+    + Import the environment from the gwyconda.yml file. 
+    + Follow some images to determine which checkboxes to select.
+    + Locate your python environment
+    + Install the PyGTK2 packages:
+        - Install PyGTK
+        - Install PyCairo
+        - Install PyGObject
+        - Manually add the paths for these into Anaconda
+    + Change the Gwyconda environment directory to the bin folder in Gwyddion
+* **Set up PyCharm**
+    + Open a new project and set the interpreter to Gwyconda 
+    + Create a python file
+    + Append the path of the bin folder in Gwyddion
+    + Ignore all runtime warnings 
+
+* **(Go back to the start because something went wrong in the installation)** 
+
+:::
+
+
+
+## Adding a config file
+
+:::: {.columns}
+
+::: {.column width="50%"}
+We added configuration file which allows users to change parameters within the code without having to open up the code and add / comment out lines. This also means that there were no code conflicts between users' installations where previously changes would get forgotten about and lost.
+
+:::
+::: {.column width="50%"}
+```{.ini}
+[MainSection]
+; file path - the directory where the files are
+path = ./
+; set the sample type here. Please note that this is case sensitive.
+sample_type = DNA
+; set the file type to look for
+fileend = .spm,.gwy,*.[0-9]
+filetype = *.[0-9]
+; set the extension of exported files
+extension = .tiff
+; set height scale values
+minheightscale = -0e-9
+maxheightscale = 3e-9
+; set the size of the cropped window / 2 in pixels
+cropwidth = 40e-9
+splitwidth = 2e-6
+; set the number of bins
+bins = 25
+; set the value of different valriables, based on the type of the sample.
+; minarea is the minimum size for grain determination
+; maxdeviation and mindeviation are the allowable deviations from the median pixel size for removal of large and small objects
+
+[DNA]
+minarea = 300e-9
+maxdeviation = 1.3
+mindeviation = 0.7
+gaussian = 0.1e-9
+thresholdingcriteria = 0.75
+
+[PROTEIN]
+minarea = 50e-9
+maxdeviation = 2.0
+mindeviation = 0.3
+gaussian = 0.1e-9
+thresholdingcriteria = 0.5
+
+[MAC]
+minarea = 1000e-9
+maxdeviation = 1.5
+mindeviation = 0.5
+gaussian = 0.25e-09
+thresholdingcriteria = 2.1
+
+[ImageOutput]
+; Turn saving figures on and off. 1 : on, 0 : off
+saveTraceFigures_option = 1
+; Turn saving cropped figures on and off. 1 : on, 0 : off
+saveCroppedFigures_option = 0
+; Save file scale option: 0 : none, 1 : ruler, 2 : inset scale bar
+savefilesScale_option = 1
+; Save file name for output colour scale eg: Nanoscope.txt
+savefile_zscalecolour = Nanoscope.txt
+; Turn on and off the z bar. 1 : on, 0 : off
+zbar_option = 1
+```
+:::
+::::
+
+
+## Containerization
+We developed a method for installation that was guaranteed to work on almost any system using Docker containers. 
+
+Docker containers are perfect for creating a reproducable and hardware agnostic solution to running this fragile and finnicky software on anyone's computer. 
+
+This solved many issues with the installation procedure, at the cost of adding a bit of difficulty with installing and running docker containers. Some users found the language and processes for running Docker containers intimidating. 
+
+
+## A new plan - Remove the Gwyddion dependency 
+
+The docker solution was good, but it didn't solve the bigger issue, Python 2.7. 
+
+::: {.incremental}
+* We decided to develop a new version of the software from scratch, without the Gwyddion dependency. This enabled us to develop the software in Python 3.X, with documentation that we would wrote alongside development. It also enabled us to understand every bit of the codebase - there was no longer a black box in our project. 
+
+* Over the next few months, we slowly developed a Minimum Viable Product version of TopoStats that could do everything that we used the old version for. 
+:::
+
+## Testing, Testing, Testing
+
+As we developed the new version of TopoStats, we made sure to add tests for as many files, classes and scripts as we could.
+
+We then added automated testing with GitHub, to ensure that any pull request that is made passes all of the repository's tests. This has proven immensely useful and has caught errors that we would not have noticed until months down the line.
+
+![](tests.png){}
+
+## Code review 
+
+Contribution is made usng GitHub's Pull Requests. A pull request requies at least one approving review before being merged. This has also proven invaluable. 
+
+![](review.png){}
+
+## Linting and formatting
+
+We have standardised our coding style somewhat, with a recommended formatter, Black, and linter, Pylint. The repository also comes with configuration files for the formatter and linter so that we are all developing the code with roughly the same style and conventions. 
+
+Code can be written in lots of different ways, some of which are harder to read than others. By establishing a style and making this more consistent on our project, it makes it easier for a wider group of people to understand and work on.
+
+## GitHub page updates, Issues and Milestones
+
+::: {.incremental}
+* We updated our page on GitHub, adding links to the documentation, contributing guidelines and a set of comprehensive installation instructions.
+
+* GitHub issues and milestones were used to document every planned feature, ensuring that it was open to everybody as opposed to being kept within meetings and private messages. This had the knock-on effect of making ourselves more organised and allowed for more insightful planning. 
+![](Milestones.png){width=75%}
+![](issue.png){width=75%}
+:::
+
+## Documentation
+:::: {.columns}
+
+::: {.column width="50%"}
+<!-- ![](readthedocs_index.png){} -->
+:::{.incremental}
+* Documentation is now written alongside the code in the form of docstrings. We aim for every function, class and file to have docstrings that describe in detail what they do, what parameters they take and what they return. So far, this has gone splendidly and has greatly reduced the amount of questions that need to be asked of each other's code. It also reduces the amount of time spent on code review. 
+
+* The documentation is hosted automatically on [ReadTheDocs](https://readthedocs.org/) using the [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html) documentation generator.
+:::
+:::
+::: {.column width="50%"}
+![](readthedocs_example.png){}
+:::
+
+::::
+
+
+
+
+
+## September 2022: Installation procedure
+
+::: {.incremental}
+* Install Anaconda
+
+
+* ```{.bash}
+conda create --name topostats python=3.10
+conda activate topostats
+git clone -b dev https://github.com/AFM-SPM/TopoStats.git
+cd TopoStats
+pip install .
+```
+
+* ```{.bash}
+run_topostats
+```
+:::
+
+## Upcoming: Installation procedure
+
+* Install Anaconda
+* ```{.bash}
+conda create --name topostats python=3.10
+conda activate topostats
+pip install topostats
+```
+
+* ```{.bash}
+run_topostats
+```
+
+## September 2022
+
+* Tests
+* Config file
+* Contributing guide
+* Documentation
+* Licencing
+* Code Testing
+* Code Review
+* Style guide
+* Versioning and Milestones
+* Human readable data formats
+
+## Before and After
+:::: {.columns}
+
+::: {.column width="50%"}
+![](git_graph_old.png){width=30%}
+
+:::
+::: {.column width="50%"}
+![](git_graph_new.png){width=25%}
+:::
+
+::::
+
+## Remaining challenges and planned development
+* Balancing openness and NDA-ed information from external research partners.
+* Balancing internal team meetings with openness on Github.
+* Building a Python notebook for a more interactive getting started guide. 
+* Tutorial driven design, mentioned at RSECON 2022.
+* Publish TopoStats on PyPI
+
+
+# Acknowledgements
+
+I would like to thank everyone who has worked on TopoStats. This was a massive group effort. (In alphabetical order)
+
+* Alice Pyne
+* Bob Turner
+* Eddie Rollins
+* Jean Du
+* Joe Benton
+* Libby Holmes
+* Max Gamill
+* Neil Shephard
+* Rob Moorehead
+
+
+:::{.notes}
+
+
+Add context in terms of what TopoStats is used for. Why do we care?
+AFM has few standards and everyone does their own thing when it comes to processing data, handling it and how we interpret measureemnts. 
+
+
+
+
+Take a screenshot of an issue?
+
+Add more context? Talk about the tools used? 
+Issues, Milestones - Explain what they are.
+
+Condense the text?
+
+:::
