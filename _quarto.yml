@@ -1,5 +1,11 @@
 project:
+  type: website
+
+website:
   title: "TopoStats : An open-software and FAIR4RS success"
+  site-url: https://sylviawhittle.github.io/FAIR4RS-topostats
+  description: "A talk about topostats as open research software."
+
 execute:
   freeze: auto
 
