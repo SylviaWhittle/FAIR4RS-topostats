@@ -10,11 +10,20 @@ format:
 ---
 
 ## Who am I?
+::::{.columns}
+:::{.column}
 * Sylvia Whittle
 * Research Technician / Software Engineer
+* Background in Physics
+* Somehow now in a biolab?
 * Part of the Pyne Lab research group, based in the Royce Discovery centre in Sheffield
 * I like advocating for open software and research
 * (Hopefully) starting PhD in October
+:::
+:::{.column}
+![](afm_image.jpg){width=65%}
+:::
+::::
 
 ## What is TopoStats? 
 :::: {.columns}
