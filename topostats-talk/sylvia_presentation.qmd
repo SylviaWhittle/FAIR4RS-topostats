@@ -19,13 +19,13 @@ format:
 ## What is TopoStats? 
 :::: {.columns}
 ::: {.column width="30%"}
-![Raw data](before.png){}
+![Raw data](before.png){width=90%}
 :::
 ::: {.column width="30%"}
-![Flattened](after_no_border.png){}
+![Flattened](after_no_border.png){width=90%}
 :::
 ::: {.column width="30%"}
-![Grains detected](after_with_mask_no_border.png){}
+![Grains detected](after_with_mask_no_border.png){width=90%}
 :::
 ::::
 
