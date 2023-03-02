@@ -286,13 +286,13 @@ Making code universally understandable
 
 ## TopoStats 2.0 installation procedure
 
-* ```{.bash}
+```{.bash .r-fit-text}
 conda create -n topostats python=3.10
 conda activate topostats
 pip install topostats
 ```
 
-* ```{.bash}
+```{.bash .r-fit-text}
 run_topostats
 ```
 
