@@ -5,7 +5,7 @@ format:
         smaller: true
         slide-number: true
         theme: dark
-        scrollable: true
+        scrollable: false
         embed-resources: true
 ---
 
@@ -96,8 +96,9 @@ PyGwy
 ::::
 
 
-## March 2022: Installation procedure 
-
+## March 2022: Installation procedure
+:::{.fragment .fade-in}
+### Install software
 :::{.incremental}
 * Uninstall all python, gwydidon, pygobject, pycairo, pygtk installations
 * Delete all caches of the above softwares
@@ -106,25 +107,38 @@ PyGwy
 * Install pycharm (register for an account if necessary)
 * Install Gwyddion (From an unfamiliar website)
 * Download a set of additional files from Google drive, hosted by our lab
-* **Set up the environment** 
-    + Import the environment from the gwyconda.yml file. 
-    + Follow some images to determine which checkboxes to select.
-    + Locate your python environment
-    + Install the PyGTK2 packages:
-        - Install PyGTK
-        - Install PyCairo
-        - Install PyGObject
-        - Manually add the paths for these into Anaconda
-    + Change the Gwyconda environment directory to the bin folder in Gwyddion
-* **Set up PyCharm**
-    + Open a new project and set the interpreter to Gwyconda 
-    + Create a python file
-    + Append the path of the bin folder in Gwyddion
-    + Ignore all runtime warnings 
+:::
+:::
+
+## March 2022: Installation procedure
+:::{.fragment .fade-in}
+### Set up the environment
+:::{.incremental}
+* Import the environment from the gwyconda.yml file. 
+* Follow some images to determine which checkboxes to select.
+* Locate your python environment
+* Install the PyGTK2 packages:
+    - Install PyGTK
+    - Install PyCairo
+    - Install PyGObject
+    - Manually add the paths for these into Anaconda
+* Change the Gwyconda environment directory to the bin folder in Gwyddion
+:::
+:::
+
+## March 2022: Installation procedure
+:::{.fragment .fade-in}
+### Set up PyCharm
+:::{.incremental}
+* Open a new project and set the interpreter to Gwyconda 
+* Create a python file
+* Append the path of the bin folder in Gwyddion
+* Ignore all runtime warnings 
 
 * **(Go back to the start because something went wrong in the installation)** 
-
 :::
+:::
+
 
 ## FAIR(4RS) Principles
 :::{.incremental}
@@ -272,13 +286,13 @@ Making code universally understandable
 
 ## TopoStats 2.0 installation procedure
 
-* ```{.bash}
+```{.bash .r-fit-text}
 conda create -n topostats python=3.10
 conda activate topostats
 pip install topostats
 ```
 
-* ```{.bash}
+```{.bash .r-fit-text}
 run_topostats
 ```
 
