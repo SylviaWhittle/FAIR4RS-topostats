@@ -39,7 +39,21 @@
     "href": "index.html#march-2022-installation-procedure",
     "title": "TopoStats : An open-software and FAIR4RS success",
     "section": "March 2022: Installation procedure",
-    "text": "March 2022: Installation procedure\n\n\nUninstall all python, gwydidon, pygobject, pycairo, pygtk installations\nDelete all caches of the above softwares\nInstall Anaconda 32 bit\nInstall python 2.7\nInstall pycharm (register for an account if necessary)\nInstall Gwyddion (From an unfamiliar website)\nDownload a set of additional files from Google drive, hosted by our lab\nSet up the environment\n\nImport the environment from the gwyconda.yml file.\nFollow some images to determine which checkboxes to select.\nLocate your python environment\nInstall the PyGTK2 packages:\n\nInstall PyGTK\nInstall PyCairo\nInstall PyGObject\nManually add the paths for these into Anaconda\n\nChange the Gwyconda environment directory to the bin folder in Gwyddion\n\nSet up PyCharm\n\nOpen a new project and set the interpreter to Gwyconda\nCreate a python file\nAppend the path of the bin folder in Gwyddion\nIgnore all runtime warnings\n\n(Go back to the start because something went wrong in the installation)"
+    "text": "March 2022: Installation procedure\n\n\nInstall software\n\n\nUninstall all python, gwydidon, pygobject, pycairo, pygtk installations\nDelete all caches of the above softwares\nInstall Anaconda 32 bit\nInstall python 2.7\nInstall pycharm (register for an account if necessary)\nInstall Gwyddion (From an unfamiliar website)\nDownload a set of additional files from Google drive, hosted by our lab"
+  },
+  {
+    "objectID": "index.html#march-2022-installation-procedure-1",
+    "href": "index.html#march-2022-installation-procedure-1",
+    "title": "TopoStats : An open-software and FAIR4RS success",
+    "section": "March 2022: Installation procedure",
+    "text": "March 2022: Installation procedure\n\n\nSet up the environment\n\n\nImport the environment from the gwyconda.yml file.\nFollow some images to determine which checkboxes to select.\nLocate your python environment\nInstall the PyGTK2 packages:\n\nInstall PyGTK\nInstall PyCairo\nInstall PyGObject\nManually add the paths for these into Anaconda\n\nChange the Gwyconda environment directory to the bin folder in Gwyddion"
+  },
+  {
+    "objectID": "index.html#march-2022-installation-procedure-2",
+    "href": "index.html#march-2022-installation-procedure-2",
+    "title": "TopoStats : An open-software and FAIR4RS success",
+    "section": "March 2022: Installation procedure",
+    "text": "March 2022: Installation procedure\n\n\nSet up PyCharm\n\n\nOpen a new project and set the interpreter to Gwyconda\nCreate a python file\nAppend the path of the bin folder in Gwyddion\nIgnore all runtime warnings\n(Go back to the start because something went wrong in the installation)"
   },
   {
     "objectID": "index.html#fair4rs-principles",
@@ -116,7 +130,7 @@
     "href": "index.html#topostats-2.0-installation-procedure",
     "title": "TopoStats : An open-software and FAIR4RS success",
     "section": "TopoStats 2.0 installation procedure",
-    "text": "TopoStats 2.0 installation procedure\n\nconda create -n topostats python=3.10\nconda activate topostats\npip install topostats\nrun_topostats"
+    "text": "TopoStats 2.0 installation procedure\nconda create -n topostats python=3.10\nconda activate topostats\npip install topostats\nrun_topostats"
   },
   {
     "objectID": "index.html#one-year-on",
